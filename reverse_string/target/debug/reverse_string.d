@@ -1,1 +1,0 @@
-/home/ybourazz/Documents/piscine-rust/reverse_string/target/debug/reverse_string: /home/ybourazz/Documents/piscine-rust/reverse_string/src/lib.rs /home/ybourazz/Documents/piscine-rust/reverse_string/src/main.rs

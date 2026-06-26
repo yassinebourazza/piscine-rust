@@ -1,0 +1,1 @@
+/home/ybourazz/Documents/piscine-rust/string_literals/target/debug/string_literals: /home/ybourazz/Documents/piscine-rust/string_literals/src/lib.rs /home/ybourazz/Documents/piscine-rust/string_literals/src/main.rs

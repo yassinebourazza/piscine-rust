@@ -1,8 +1,8 @@
 use edit_distance::*;
 
 fn main() {
-    let source = "gumbo";
-    let target = "gambol";
+    let source = "rosettacode";
+    let target = "raisethysword";
 
     println!(
         "It's necessary to make {} change(s) to {:?} to get {:?}",

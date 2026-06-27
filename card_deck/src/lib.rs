@@ -19,10 +19,7 @@ pub enum Rank {
 
 impl Suit {
     pub fn random() -> Suit {
-        let mut generator =  rand::rng();
-
-        let x: u8 = generator.random_range(1..=4);
-        Suit::translate(x)
+        Suit::translate(rand::thread_rng().gen_range(1..=4))
     }
 
     pub fn translate(value: u8) -> Suit {
@@ -37,15 +34,13 @@ impl Suit {
 
 impl Rank {
     pub fn random() -> Rank {
-        let mut generator = rand::rng();
-        let x: u8 = generator.random_range(1..=13);
-        Rank::translate(x)
+        Rank::translate(rand::thread_rng().gen_range(1..=13))
     }
 
     pub fn translate(value: u8) -> Rank {
-         match value {
+        match value {
             1 => Rank::Ace,
-            11 => Rank::Jack,
+            11 => Rank::King,
             12 => Rank::Queen,
             13 => Rank::King,
             _ => Rank::Number(value),
@@ -53,12 +48,16 @@ impl Rank {
     }
 }
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,
 }
 
 pub fn winner_card(card: &Card) -> bool {
-    card.rank == Rank::Ace && card.suit == Suit::Spade
+    if card.rank == Rank::Ace && card.suit == Suit::Spade {
+        return  true;
+    }
+
+    false
 }

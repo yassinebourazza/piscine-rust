@@ -1,4 +1,4 @@
-use rand::prelude::*;
+use rand::Rng;
 
 #[derive(Debug)]
 pub enum Suit {
@@ -19,10 +19,7 @@ pub enum Rank {
 
 impl Suit {
     pub fn random() -> Suit {
-        let mut generator =  rand::rng();
-
-        let x: u8 = generator.random_range(1..=4);
-        Suit::translate(x)
+        Suit::translate(rand::thread_rng().gen_range(1..=4))
     }
 
     pub fn translate(value: u8) -> Suit {
@@ -38,9 +35,7 @@ impl Suit {
 
 impl Rank {
     pub fn random() -> Rank {
-        let mut generator = rand::rng();
-        let x: u8 = generator.random_range(1..=13);
-        Rank::translate(x)
+        Rank::translate(rand::thread_rng().gen_range(1..=13))
     }
 
     pub fn translate(value: u8) -> Rank {

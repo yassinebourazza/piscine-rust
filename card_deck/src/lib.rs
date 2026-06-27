@@ -48,7 +48,7 @@ impl Rank {
             11 => Rank::Jack,
             12 => Rank::Queen,
             13 => Rank::King,
-            n => Rank::Number(n),
+            _ => Rank::Number(value),
         }
     }
 }

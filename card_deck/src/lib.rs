@@ -1,6 +1,6 @@
 use rand::prelude::*;
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub enum Suit {
     Heart,
     Diamond,
@@ -19,7 +19,10 @@ pub enum Rank {
 
 impl Suit {
     pub fn random() -> Suit {
-        Suit::Heart
+        let mut generator =  rand::rng();
+
+        let x: u8 = generator.random_range(1..=4);
+        Suit::translate(x)
     }
 
     pub fn translate(value: u8) -> Suit {
@@ -35,7 +38,9 @@ impl Suit {
 
 impl Rank {
     pub fn random() -> Rank {
-        Rank::Ace
+        let mut generator = rand::rng();
+        let x: u8 = generator.random_range(1..=13);
+        Rank::translate(x)
     }
 
     pub fn translate(value: u8) -> Rank {
@@ -49,12 +54,12 @@ impl Rank {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,
 }
 
 pub fn winner_card(card: &Card) -> bool {
-    card.rank == Rank::Ace 
+    card.rank == Rank::Ace && card.suit == Suit::Spade
 }

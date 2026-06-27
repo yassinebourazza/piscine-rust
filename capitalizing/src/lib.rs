@@ -1,5 +1,8 @@
 pub fn capitalize_first(input: &str) -> String {
     let mut vector = Vec::new();
+    if input.is_empty() {
+    return String::new();
+}
     vector.push(input.chars().next().unwrap().to_string().to_uppercase());
     for r in input.chars().skip(1) {
         vector.push(r.to_string());

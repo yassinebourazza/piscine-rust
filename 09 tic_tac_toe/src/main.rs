@@ -12,7 +12,7 @@ fn main() {
     );
      //player O won
 
-    let diag = [['O', 'O', 'X'], ['O', 'X', 'O'], ['O', '#', 'X']];
+     let diag = [['O', 'O', 'X'], ['O', 'X', 'O'], ['X', '#', 'X']];
 //
 //    println!("{}",vertical('O', diag));
 

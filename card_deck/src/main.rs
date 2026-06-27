@@ -12,4 +12,23 @@ fn main() {
         println!("You are the winner!");
     }
 
+    test_winner();
+
+    fn test_winner() {
+        let winner = Card {
+            rank: Rank::Ace,
+            suit: Suit::Spade,
+        };
+
+        for rank in 1..14 {
+            for suit in 1..5 {
+                let card = Card {
+                    rank: Rank::translate(rank),
+                    suit: Suit::translate(suit),
+                };
+
+                assert_eq!(card_deck::winner_card(&card), card == winner);
+            }
+        }
+    }
 }

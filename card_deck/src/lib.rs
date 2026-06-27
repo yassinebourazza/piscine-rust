@@ -30,8 +30,7 @@ impl Suit {
             1 => Suit::Heart,
             2 => Suit::Diamond,
             3 => Suit::Spade,
-            4 => Suit::Club,
-            _ => Suit::Club, 
+            _ => Suit::Club,
         }
     }
 }

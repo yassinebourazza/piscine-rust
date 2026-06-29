@@ -7,12 +7,12 @@ pub fn mean(list: &[i32]) -> f64 {
 pub fn median(list: &[i32]) -> i32 {
     let mut vec = list.to_vec();
     vec.sort();
-    if vec.len() % 2 == 1 {
-        return vec[vec.len()/2]
-    } else {
-        return (vec[vec.len()/2] + vec[(vec.len()/2)-1]) /2
-    }
     
+    if vec.len() % 2 == 1 {
+        return vec[vec.len() / 2];
+    } else {
+        return (vec[(vec.len() / 2) -1] + vec[vec.len() / 2]) / 2;
+    }
 }
 
 pub fn mode(list: &[i32]) -> i32 {

@@ -10,7 +10,7 @@ pub fn median(list: &[i32]) -> i32 {
     if vec.len() % 2 == 1 {
         return vec[vec.len()/2]
     } else {
-        return (vec[vec.len()/2] + vec[(vec.len()/2)+1]) /2
+        return (vec[vec.len()/2] + vec[(vec.len()/2)-1]) /2
     }
     
 }

@@ -15,6 +15,7 @@ pub fn median(list: &[i32]) -> i32 {
     }
 }
 
+
 pub fn mode(list: &[i32]) -> i32 {
     let mut map = HashMap::new();
 

@@ -13,3 +13,4 @@ pub fn create_map(s1: &str) -> HashMap<char, i32> {
     }
     map
 }
+

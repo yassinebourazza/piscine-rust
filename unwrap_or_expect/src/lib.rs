@@ -2,31 +2,24 @@
 pub enum Security {
     Warning,
     NotFound,
-    //Unknown,
+    Unknown,
     Message,
-    //UnexpectedUrl,
+    UnexpectedUrl,
 }
 
 pub fn fetch_data(data: Result<&str, &str>, security: Security) -> String {
-    match security {
+     match security_level {
+        Security::Unknown => server.unwrap().to_string(),
 
-        Security::Warning => {
-            data.unwrap().to_string()
-        }
+        Security::Message => server.expect("ERROR: program stops").to_string(),
 
-        Security::Message => {
-            data.expect("ERROR: program stops").to_string()
-        }
+        Security::Warning => server.unwrap_or("WARNING: check the server").to_string(),
 
-         Security::NotFound => {
-            let url = data.unwrap();
+        Security::NotFound => match server {
+            Ok(url) => url.to_string(),
+            Err(msg) => format!("Not found: {}", msg),
+        },
 
-            if url == "malicious_server.com" {
-                panic!("{}", url);
-            }
-
-            url.to_string()
-        }
-
+        Security::UnexpectedUrl => server.unwrap_err().to_string(),
     }
 }

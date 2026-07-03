@@ -30,7 +30,7 @@ impl fmt::Display for ReadErr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "Failed to read todo file")
     }
-
+}
 
 impl Error for ReadErr {
     fn source(&self) -> Option<&(dyn Error + 'static)> {

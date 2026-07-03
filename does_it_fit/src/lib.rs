@@ -1,6 +1,6 @@
 pub mod areas_volumes;
 
-use areas_volumes::{GeometricalShapes, GeometricalVolumes};
+pub use areas_volumes::{GeometricalShapes, GeometricalVolumes};
 
 pub fn area_fit((x, y): (usize, usize),kind: areas_volumes::GeometricalShapes,times: usize,(a, b): (usize, usize),) -> bool {
     

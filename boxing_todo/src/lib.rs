@@ -1,8 +1,9 @@
-mod err;
+pub mod err;
 
 use std::error::Error;
 use std::fs;
-use err::{ParseErr, ReadErr};
+
+use crate::err::{ParseErr, ReadErr};
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Task {
@@ -17,16 +18,11 @@ pub struct TodoList {
     pub tasks: Vec<Task>,
 }
 
-
-
 impl TodoList {
     pub fn get_todo(path: &str) -> Result<TodoList, Box<dyn Error>> {
-
-        let mut tasksVec = Vec::new();
-
-        let content = fs::read_to_string(path)
-            .map_err(|e| ReadErr { err: Box::new(e) })?;
-
+        let content = fs::read_to_string(path).map_err(|e| ReadErr {
+            child_err: Box::new(e),
+        })?;
 
         let parsed = json::parse(&content)
             .map_err(|e| ParseErr::Malformed(Box::new(e)))?;
@@ -38,25 +34,26 @@ impl TodoList {
 
         let tasks = &parsed["tasks"];
 
-        if !tasks.is_array() {
-            return Err(Box::new(ParseErr::Malformed(
-                "tasks is not array".into(),
-            )));
-        }
-
-        if tasks.len() < 1 {
+        if tasks.len() == 0 {
             return Err(Box::new(ParseErr::Empty));
         }
 
+        let mut tasks_vec = Vec::new();
 
-        for t in tasks.members() {
-            tasksVec.push(Task {
-                id: t["id"].as_u32().unwrap_or(0),
-                description: t["description"].as_str().unwrap_or("").to_string(),
-                level: t["level"].as_u32().unwrap_or(0),
+        for task in tasks.members() {
+            tasks_vec.push(Task {
+                id: task["id"].as_u32().unwrap_or(0),
+                description: task["description"]
+                    .as_str()
+                    .unwrap_or("")
+                    .to_string(),
+                level: task["level"].as_u32().unwrap_or(0),
             });
         }
 
-        Ok(TodoList { title, tasks: tasksVec })
+        Ok(TodoList {
+            title,
+            tasks: tasks_vec,
+        })
     }
 }

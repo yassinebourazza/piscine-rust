@@ -23,7 +23,7 @@ impl Error for ParseErr {
 
 #[derive(Debug)]
 pub struct ReadErr {
-    pub err: Box<dyn Error>,
+    pub child_err: Box<dyn Error>,
 }
 
 impl fmt::Display for ReadErr {
@@ -34,6 +34,6 @@ impl fmt::Display for ReadErr {
 
 impl Error for ReadErr {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
-        Some(&*self.err)
+        Some(&*self.child_err)
     }
 }

@@ -2,13 +2,12 @@ mod err;
 
 use std::error::Error;
 use std::fs;
-use json::JsonValue;
 use err::{ParseErr, ReadErr};
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Task {
     pub id: u32,
-    pub desc: String,
+    pub description: String,
     pub level: u32,
 }
 
@@ -17,6 +16,42 @@ pub struct TodoList {
     pub title: String,
     pub tasks: Vec<Task>,
 }
+
+
+use std::{error::Error, fmt};
+
+#[derive(Debug)]
+pub enum ParseErr {
+    Empty,
+    Malformed(Box<dyn Error>),
+}
+
+impl fmt::Display for ParseErr {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Failed to parse todo file")
+    }
+}
+
+impl Error for ParseErr {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        match self {
+            ParseErr::Empty => None,
+            ParseErr::Malformed(e) => Some(&**e),
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct ReadErr {
+    pub err: Box<dyn Error>,
+}
+
+impl fmt::Display for ReadErr {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Failed to read todo file")
+    }
+}
+
 
 impl TodoList {
     pub fn get_todo(path: &str) -> Result<TodoList, Box<dyn Error>> {
@@ -51,7 +86,7 @@ impl TodoList {
         for t in tasks.members() {
             tasksVec.push(Task {
                 id: t["id"].as_u32().unwrap_or(0),
-                desc: t["description"].as_str().unwrap_or("").to_string(),
+                description: t["description"].as_str().unwrap_or("").to_string(),
                 level: t["level"].as_u32().unwrap_or(0),
             });
         }

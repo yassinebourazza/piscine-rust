@@ -18,7 +18,6 @@ pub struct TodoList {
 }
 
 
-use std::{error::Error, fmt};
 
 #[derive(Debug)]
 pub enum ParseErr {

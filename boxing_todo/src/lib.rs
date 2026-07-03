@@ -1,9 +1,9 @@
 pub mod err;
 
+pub use err::{ParseErr, ReadErr};
+
 use std::error::Error;
 use std::fs;
-
-use crate::err::{ParseErr, ReadErr};
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Task {

@@ -4,7 +4,6 @@ pub struct CipherError {
 }
 
 pub fn cipher(original: &str, ciphered: &str) -> Result<(), CipherError> {
-    let err = CipherError { expected : ciphered.to_string()};
     let mut res = Vec::new();
     for r in original.chars() {
         let mut min = 0;
@@ -21,6 +20,7 @@ pub fn cipher(original: &str, ciphered: &str) -> Result<(), CipherError> {
             res.push(r.to_string())
         }
     }
+    let err = CipherError { expected : res.join("")};
     if res.join("") != ciphered {
         return Err(err)
     }

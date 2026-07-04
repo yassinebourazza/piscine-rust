@@ -3,43 +3,42 @@ pub use crate::mall::{Mall, Guard, Store , Employee , Floor};
 use std::collections::HashMap;
 
 pub fn biggest_store(m: &Mall) -> (String, Store) {
-    let mut count = 0;
-    let mut res = None;
-    let mut exp_name = String::new();
-    for (_n,floor) in m.floors.iter() {
-        for (name,store) in floor.stores.iter() {
-            if count < store.square_meters {
-                res = Some(store);
-                exp_name = name;
-                count = store.square_meters;
+    let mut max = None;
+
+    for (_n, floor) in &m.floors {
+        for (name, store) in &floor.stores {
+            match max {
+                None => max = Some((name.clone(), store.clone())),
+                Some((_, ref mut best_store)) if store.square_meters > best_store.square_meters => {
+                    max = Some((name.clone(), store.clone()));
+                }
+                _ => {}
             }
         }
     }
-    (exp_name,res.unwrap().clone())
+
+    max.unwrap()
 }
 
-pub fn highest_paid_employee(m: &Mall) -> Vec<(String,Employee)> {
-    let mut vec = Vec::new();
-    let mut res = None;
-    let mut count: f64 = 0.0;
-    let mut exp_name = String::new();
+pub fn highest_paid_employee(m: &Mall) -> Vec<(String, Employee)> {
+    let mut best: Option<(String, Employee)> = None;
 
-    for (_n,floor) in m.floors.iter() {
-        for (_n1,store) in floor.stores.iter() {
-            for (name,emp) in store.employees.iter() {
-                if count < emp.salary {
-                    exp_name = name.clone();
-                    res = Some(emp);
-                    count = emp.salary;
+    for floor in m.floors.values() {
+        for store in floor.stores.values() {
+            for (name, emp) in &store.employees {
+                let candidate = (name.clone(), *emp);
+
+                match &best {
+                    None => best = Some(candidate),
+                    Some((_, e)) if emp.salary > e.salary => best = Some(candidate),
+                    _ => {}
                 }
             }
         }
     }
-    vec.push((exp_name,res.unwrap().clone()));
-    return vec
 
+    best.into_iter().collect()
 }
-
 pub fn nbr_of_employees(m: &Mall) -> usize {
     let mut count = 0;
     for (_n,floor) in m.floors.iter() {

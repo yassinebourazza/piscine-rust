@@ -1,19 +1,23 @@
-pub fn expected_variable(str1: &str, expected: &str) -> Option<String> {
-    if !str1.is_empty() && str1.chars().all(|c| c.is_alphanumeric() || c == '_') {
+pub fn expected_variable(str1: &str, str2: &str) -> Option<String> {
+
+    if !(!str1.is_empty() && str1.chars().all(|c| (c.is_alphanumeric() || c == '_'))) {
         return None;
     }
 
     if str2.is_empty() {
         return None;
     }
+    let compare_lower = str1.to_lowercase();
+    let expected_lower = str2.to_lowercase();
 
     let distance = edit_distance(&str1.to_lowercase(), &str2.to_lowercase());
 
-    let res =((str2.len().saturating_sub(distance) as f64) / (str2.len() as f64)) * 100.0;
-    let percentage = res.round() as i32;
 
-    if p > 50 {
-        Some(format!("{}%", p))
+    let res = ((str2.len().saturating_sub(distance) as f64) / (str2.len() as f64)) * 100.0;
+    let pre = res.round() as i32;
+
+    if pre > 50 {
+        Some(format!("{}%", pre))
     } else {
         None
     }

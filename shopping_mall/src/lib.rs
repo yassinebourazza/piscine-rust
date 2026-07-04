@@ -3,13 +3,13 @@ pub use crate::mall::{Mall, Guard, Store , Employee , Floor};
 use std::collections::HashMap;
 
 pub fn biggest_store(m: &Mall) -> (String, Store) {
-    let mut max = None;
+    let mut max: Option<(String, Store)> = None;
 
-    for (_n, floor) in &m.floors {
+    for floor in m.floors.values() {
         for (name, store) in &floor.stores {
-            match max {
+            match &max {
                 None => max = Some((name.clone(), store.clone())),
-                Some((_, ref mut best_store)) if store.square_meters > best_store.square_meters => {
+                Some((_, best_store)) if store.square_meters > best_store.square_meters => {
                     max = Some((name.clone(), store.clone()));
                 }
                 _ => {}
@@ -39,6 +39,7 @@ pub fn highest_paid_employee(m: &Mall) -> Vec<(String, Employee)> {
 
     best.into_iter().collect()
 }
+
 pub fn nbr_of_employees(m: &Mall) -> usize {
     let mut count = 0;
     for (_n,floor) in m.floors.iter() {

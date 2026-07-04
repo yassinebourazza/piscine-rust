@@ -10,7 +10,7 @@ pub fn biggest_store(m: &Mall) -> (String, Store) {
         for (name,store) in floor.stores.iter() {
             if count < store.square_meters {
                 res = Some(store);
-                exp_name = name.clone();
+                exp_name = name;
                 count = store.square_meters;
             }
         }

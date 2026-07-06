@@ -1,5 +1,5 @@
 pub fn num_to_ordinal(x: u32) -> String {
-      let ref = match x % 100 {
+      let reff = match x % 100 {
         11 | 12 | 13 => "th",
         _ => match x % 10 {
             1 => "st",
@@ -9,5 +9,5 @@ pub fn num_to_ordinal(x: u32) -> String {
         },
     };
 
-    format!("{}{}", x, ref)
+    format!("{}{}", x, reff)
 }

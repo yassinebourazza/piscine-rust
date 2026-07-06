@@ -1,6 +1,7 @@
 pub fn scytale_cipher(message: &str, i: usize) -> String {
-    if message.len() == 0 {
-        return message
+
+    if message.len() == 0 || i == 0 {
+        return String::new()
     }
     
     let mut len = message.len()/i;

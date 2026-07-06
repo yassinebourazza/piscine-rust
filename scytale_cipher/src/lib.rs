@@ -14,6 +14,6 @@ pub fn scytale_cipher(message: &str, i: usize) -> String {
     for r in arr {
         vec.push(r.join(""));
     }
-    vec.join("").trim(' ').to_string()
+    vec.join("").trim().to_string()
     
 }

@@ -1,9 +1,9 @@
 use spelling::*;
 
 fn main() {
-    println!("{}", spell(8));
-    println!("{}", spell(159901));
-    println!("{}", spell(96));
-    println!("{}", spell(1000000));
-    println!("{}", spell(1000100));
+    println!("{}", spell(0));
+    println!("{}", spell(120));
+    println!("{}", spell(10123));
+    println!("{}", spell(910112));
+    println!("{}", spell(651123));
 }

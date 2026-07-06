@@ -1,6 +1,9 @@
 pub fn spell(n: u64) -> String {
     let mut num = n.clone();
     let mut res = Vec::new();
+    if num == 0 {
+        return "zero".to_string()
+    }
     while num > 0 {
         //println!("{:?}  {}",res,num);
         if num < 10 {
@@ -15,8 +18,12 @@ pub fn spell(n: u64) -> String {
                 res.push(teen(num));
                 break
             } else {
-                res.push(tens((num/10) * 10));
-                 num %= 10;
+                if num % 10 == 0 {
+                    res.push(tens((num/10) * 10));
+                } else {
+                    res.push(format!("{}-{}",tens((num/10) * 10), nums(num%10)));
+                }
+                break
             }
         } else if num >= 100 && num < 1000 {
 

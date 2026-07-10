@@ -15,21 +15,21 @@ impl Tracker {
             max: m,
         }
     }
-    
+
 
     pub fn set_value(& self ,v : &Rc<i32>) {
-        let p = ( Rc::strong_count(v) as f64 / self.max as f64) * 100.0;
+        let p = ((Rc::strong_count(v) as f64 / self.max as f64) * 100.0).floor();
        //println!("{}",Rc::strong_count(v));
         if p > 100.0 {
             self.messages.borrow_mut().push(format!("Error: You can't go over your quota!"))
         } else if p > 70.0 {
-            self.messages.borrow_mut().push(format!("Warning: You have used up over {}% of your quota!", p.round()))
+            self.messages.borrow_mut().push(format!("Warning: You have used up over {}% of your quota!", p))
         }
 
     }
 
     pub fn peek(& self ,v : &Rc<i32>) {
-        let p = ( Rc::strong_count(v) as f64 / self.max as f64) * 100.0;
-        self.messages.borrow_mut().push(format!("Info: This value would use {}% of your quota", p.round()))
+        let p = ((Rc::strong_count(v) as f64 / self.max as f64) * 100.0).floor();
+        self.messages.borrow_mut().push(format!("Info: This value would use {}% of your quota", p))
     }
 }

@@ -16,7 +16,7 @@ impl Tracker {
         }
     }
 
-    pub fn set_value(&mut self ,v : &Rc<i32>) {
+    pub fn set_value(& self ,v : &Rc<i32>) {
         let p = ( Rc::strong_count(v) as f64 / self.max as f64) * 100.0;
        //println!("{}",Rc::strong_count(v));
         if p > 100.0 {
@@ -27,7 +27,7 @@ impl Tracker {
 
     }
 
-    pub fn peek(&mut self ,v : &Rc<i32>) {
+    pub fn peek(& self ,v : &Rc<i32>) {
         let p = ( Rc::strong_count(v) as f64 / self.max as f64) * 100.0;
         self.messages.borrow_mut().push(format!("Info: This value would use {}% of your quota", p.round()))
     }

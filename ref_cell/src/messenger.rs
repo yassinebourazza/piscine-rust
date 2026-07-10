@@ -15,6 +15,7 @@ impl Tracker {
             max: m,
         }
     }
+    
 
     pub fn set_value(& self ,v : &Rc<i32>) {
         let p = ( Rc::strong_count(v) as f64 / self.max as f64) * 100.0;

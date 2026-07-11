@@ -1,6 +1,6 @@
 #[derive(Clone, Debug)]
 pub struct List<T> {
-    pub head: Option<Box<Node<T>>>,
+    pub head: Option<Node<T>>,
 }
 
 #[derive(Clone, Debug)]
@@ -17,15 +17,17 @@ impl<T> List<T> {
     }
 
     pub fn push(&mut self, value: T) {
-        self.head = Some(Box::new(Node {
+         let new_node = Node {
             value,
-            next: self.head.take(),
-        }));
+            next: self.head.take().map(Box::new),
+        };
+
+        self.head = Some(new_node);
     }
 
     pub fn pop(&mut self) {
-        if let Some(last) = self.head.take() {
-            self.head = last.next;
+        if let Some(node) = self.head.take() {
+            self.head = node.next.map(|boxx| *boxx);
         }
     }
 
@@ -34,7 +36,7 @@ impl<T> List<T> {
         let mut count = 0;
         while let Some(node) = cur {
             count += 1;
-            cur = node.next.as_ref();
+            cur = node.next.as_deref();
         }
         count
     }

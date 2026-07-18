@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "roman_numbers_iterator"
+name = "roman_numbers_iter"
 version = "0.1.0"

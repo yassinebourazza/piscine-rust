@@ -1,19 +1,39 @@
 use crate::RomanDigit::*;
-impl RomanNumber {
-    fn to_decimal(&self) -> u32 {
-        let mut total = 0;
 
-        for digit in &self.0 {
-            total += match digit {
-                RomanDigit::Nulla => 0,
-                RomanDigit::I => 1,
-                RomanDigit::V => 5,
-                RomanDigit::X => 10,
-                RomanDigit::L => 50,
-                RomanDigit::C => 100,
-                RomanDigit::D => 500,
-                RomanDigit::M => 1000,
-            };
+impl RomanNumber {
+    fn value(d: RomanDigit) -> u32 {
+        match d {
+            Nulla => 0,
+            I => 1,
+            V => 5,
+            X => 10,
+            L => 50,
+            C => 100,
+            D => 500,
+            M => 1000,
+        }
+    }
+
+    fn to_decimal(&self) -> u32 {
+        let digits = &self.0;
+        let mut total = 0;
+        let mut i = 0;
+
+        while i < digits.len() {
+            let current = Self::value(digits[i]);
+
+            if i + 1 < digits.len() {
+                let next = Self::value(digits[i + 1]);
+
+                if current < next {
+                    total += next - current;
+                    i += 2;
+                    continue;
+                }
+            }
+
+            total += current;
+            i += 1;
         }
 
         total
@@ -24,10 +44,8 @@ impl Iterator for RomanNumber {
     type Item = RomanNumber;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let value = self.to_decimal();
-
-        *self = RomanNumber::from(value + 1);
-
+        let value = self.to_decimal() + 1;
+        *self = RomanNumber::from(value);
         Some(self.clone())
     }
 }

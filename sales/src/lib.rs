@@ -29,31 +29,31 @@ impl Cart {
         }
     }
 
-    pub fn generate_receipt(&mut self) -> Vec<f32> {
+        pub fn generate_receipt(&mut self) -> Vec<f32> {
         let mut prices: Vec<f32> = self.items.iter().map(|x| x.1).collect();
-
-        let total: f32 = prices.iter().sum();
-
-        let mut free = 0.0;
-
-        let mut sorted = prices.clone();
-        sorted.sort_by(|a, b| a.partial_cmp(b).unwrap());
-
+        
+        let mut sorted: Vec<(usize, f32)> = prices
+            .iter()
+            .enumerate()
+            .map(|(i, p)| (i, *p))
+            .collect();
+        
+        sorted.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+        
         for group in sorted.chunks(3) {
             if group.len() == 3 {
-                free += group[0];
+                let total = group[0].1 + group[1].1 + group[2].1;
+                let ratio = (total - group[0].1) / total;
+            
+                for item in group {
+                    prices[item.0] = (prices[item.0] * ratio * 100.0).round() / 100.0;
+                }
             }
         }
-
-        let ratio = (total - free) / total;
-
-        prices.iter_mut().for_each(|x| {
-            *x = ((*x * ratio) * 100.0).round() / 100.0;
-        });
-
+    
         prices.sort_by(|a, b| a.partial_cmp(b).unwrap());
-
+    
         self.receipt = prices.clone();
-        return prices
+        prices
     }
 }

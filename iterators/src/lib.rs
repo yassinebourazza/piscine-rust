@@ -11,7 +11,7 @@ impl Iterator for Collatz {
             return None;
         }
 
-        let current = self.n;
+        let current = *self;
 
         if self.n % 2 == 0 {
             self.n /= 2;
